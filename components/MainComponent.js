@@ -12,6 +12,7 @@ import Dishdetail from './DishdetailComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
+import Reservation from './ReservationComponent';
 
 
 const mapStateToProps = state => {
@@ -33,6 +34,7 @@ const MenuNavigator = createStackNavigator();
 const MainDrawerNavigator = createDrawerNavigator();
 const ContactNavigator = createStackNavigator();
 const AboutNavigator = createStackNavigator();
+const ReservationNavigator = createStackNavigator();
 
 
 const DrawerNavigatorIcon = ({ navigation }) => {
@@ -53,7 +55,7 @@ const DrawerIcon = ({ name, size, color }) => {
             name={name}
             type='font-awesome'
             size={size ? size : 24}
-            color={color ? coloe : '#000'}
+            color={color ? color : '#000'}
         />
     )
 }
@@ -73,6 +75,32 @@ const CustomDrawerContentComponent = (props) => (
         </SafeAreaView>
     </DrawerContentScrollView>
 );
+
+function ReservationNavigatorScreen({ navigation }) {
+    return(
+        <ReservationNavigator.Navigator
+            initialRouteName='Reservation'
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "#512DA8"
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                    color: "#fff"            
+                }
+            }} 
+        >
+            <ContactNavigator.Screen 
+                name="Reservation"
+                component={Reservation}
+                options={{ 
+                    headerTitle: "Reserve Table",
+                    headerLeft: () => <DrawerNavigatorIcon navigation={navigation} />
+                }}
+            />
+        </ReservationNavigator.Navigator>
+    )
+}
 
 function ContactNavigatorScreen({ navigation }) {
     return(
@@ -125,7 +153,6 @@ function AboutNavigatorScreen({ navigation }) {
         </AboutNavigator.Navigator>
     );
 }
-
 
 
 function MenuNavigatorScreen({ navigation }) {
@@ -222,9 +249,18 @@ function MainDrawerNavigatorScreen() {
                 options={{ 
                     title: 'Contact', 
                     drawerLabel: 'Contact Us',
-                    drawerIcon: () => <DrawerIcon name="address-card" size={22} />
+                    drawerIcon: () => <DrawerIcon name="address-card" size={21} />
                 }}
-            />            
+            />
+            <MainDrawerNavigator.Screen
+                name="Reservation"
+                component={ReservationNavigatorScreen}
+                options={{ 
+                    title: 'Reservation', 
+                    drawerLabel: 'Reserve Table',
+                    drawerIcon: () => <DrawerIcon name="cutlery" size={24} />
+                }}
+            />
         </MainDrawerNavigator.Navigator>
     );
 };
