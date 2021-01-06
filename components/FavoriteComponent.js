@@ -1,42 +1,38 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
-import { Tile } from 'react-native-elements';
+import { FlatList, View, Text } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
-
+import { baseUrl } from '../shared/baseUrl';
 
 const mapStateToProps = state => {
     return {
-        dishes: state.dishes
+        dishes: state.dishes,
+        favorites: state.favorites
     }
 }
 
-class Menu extends Component {
+class Favorites extends Component {
     render() {
-        const { navigate } = this.props.navigation;
 
         const renderMenuItem = ({item, index}) => {
             return (
-                <Tile
+                <ListItem 
                     key={index}
                     title={item.name}
-                    caption={item.description}
-                    featured
-                    onPress={() => navigate('Dishdetail', {dishId: item.id})}
-                    imageSrc={{uri: baseUrl + item.image}}
-                    containerStyle={{marginBottom: 40}}
+                    subtitle={item.description}
+                    hideChevron={true}
+                    onPress={() => this.props.navigation.navigate('Dishdetail', {dishId: item.id})}
+                    leftAvatar={{ source: {uri: baseUrl + item.image}}}
                 />
             );
         };
 
         if (this.props.dishes.isLoading) {
-            return (
-                <Loading />
-            );
+            return (<Loading />);
         }
         else if (this.props.dishes.errMess) {
-            return(
+            return (
                 <View>
                     <Text>{this.props.dishes.errMess}</Text>
                 </View>
@@ -44,8 +40,8 @@ class Menu extends Component {
         }
         else {
             return (
-                <FlatList
-                    data={this.props.dishes.dishes}
+                <FlatList 
+                    data={this.props.dishes.dishes.filter(dish => this.props.favorites.some(el => el === dish.id))}
                     renderItem={renderMenuItem}
                     keyExtractor={item => item.id.toString()}
                 />
@@ -54,4 +50,4 @@ class Menu extends Component {
     }
 }
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps)(Favorites)

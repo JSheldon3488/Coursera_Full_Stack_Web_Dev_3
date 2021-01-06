@@ -13,11 +13,10 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Reservation from './ReservationComponent';
-
+import Favorites from './FavoriteComponent';
 
 const mapStateToProps = state => {
     return {
-
     }
 }
 
@@ -35,6 +34,7 @@ const MainDrawerNavigator = createDrawerNavigator();
 const ContactNavigator = createStackNavigator();
 const AboutNavigator = createStackNavigator();
 const ReservationNavigator = createStackNavigator();
+const FavoritesNavigator = createStackNavigator();
 
 
 const DrawerNavigatorIcon = ({ navigation }) => {
@@ -75,6 +75,32 @@ const CustomDrawerContentComponent = (props) => (
         </SafeAreaView>
     </DrawerContentScrollView>
 );
+
+function FavoritesNavigatorScreen({ navigation }) {
+    return(
+        <FavoritesNavigator.Navigator
+            initialRouteName='Favorites'
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "#512DA8"
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                    color: "#fff"            
+                }
+            }} 
+        >
+            <FavoritesNavigator.Screen 
+                name="Favorites"
+                component={Favorites}
+                options={{ 
+                    headerTitle: "My Favorites",
+                    headerLeft: () => <DrawerNavigatorIcon navigation={navigation} />
+                }}
+            />
+        </FavoritesNavigator.Navigator>
+    )
+}
 
 function ReservationNavigatorScreen({ navigation }) {
     return(
@@ -226,15 +252,6 @@ function MainDrawerNavigatorScreen() {
                 }} 
             />
             <MainDrawerNavigator.Screen 
-                name="About Us"
-                component={AboutNavigatorScreen}
-                options={{ 
-                    title: 'About', 
-                    drawerLabel: 'About Us',
-                    drawerIcon: () => <DrawerIcon name="info-circle" />
-                }}
-            />
-            <MainDrawerNavigator.Screen 
                 name="Menu" 
                 component={MenuNavigatorScreen} 
                 options={{ 
@@ -244,12 +261,12 @@ function MainDrawerNavigatorScreen() {
                 }}
             />
             <MainDrawerNavigator.Screen
-                name="Contact"
-                component={ContactNavigatorScreen}
+                name="Favorites"
+                component={FavoritesNavigatorScreen}
                 options={{ 
-                    title: 'Contact', 
-                    drawerLabel: 'Contact Us',
-                    drawerIcon: () => <DrawerIcon name="address-card" size={21} />
+                    title: 'Favorites', 
+                    drawerLabel: 'My Favorites',
+                    drawerIcon: () => <DrawerIcon name="heart" size={24} />
                 }}
             />
             <MainDrawerNavigator.Screen
@@ -259,6 +276,24 @@ function MainDrawerNavigatorScreen() {
                     title: 'Reservation', 
                     drawerLabel: 'Reserve Table',
                     drawerIcon: () => <DrawerIcon name="cutlery" size={24} />
+                }}
+            />
+            <MainDrawerNavigator.Screen 
+                name="About Us"
+                component={AboutNavigatorScreen}
+                options={{ 
+                    title: 'About', 
+                    drawerLabel: 'About Us',
+                    drawerIcon: () => <DrawerIcon name="info-circle" />
+                }}
+            />
+            <MainDrawerNavigator.Screen
+                name="Contact"
+                component={ContactNavigatorScreen}
+                options={{ 
+                    title: 'Contact', 
+                    drawerLabel: 'Contact Us',
+                    drawerIcon: () => <DrawerIcon name="address-card" size={21} />
                 }}
             />
         </MainDrawerNavigator.Navigator>
