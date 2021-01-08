@@ -14,6 +14,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
+import Login from './LoginComponent';
 
 const mapStateToProps = state => {
     return {
@@ -35,6 +36,7 @@ const ContactNavigator = createStackNavigator();
 const AboutNavigator = createStackNavigator();
 const ReservationNavigator = createStackNavigator();
 const FavoritesNavigator = createStackNavigator();
+const LoginNavigator = createStackNavigator();
 
 
 const DrawerNavigatorIcon = ({ navigation }) => {
@@ -75,6 +77,32 @@ const CustomDrawerContentComponent = (props) => (
         </SafeAreaView>
     </DrawerContentScrollView>
 );
+
+function LoginNavigatorScreen({ navigation }) {
+    return(
+        <LoginNavigator.Navigator
+            initialRouteName='Login'
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "#512DA8"
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                    color: "#fff"            
+                }
+            }} 
+        >
+            <LoginNavigator.Screen 
+                name="Login"
+                component={Login}
+                options={{ 
+                    headerTitle: "Login",
+                    headerLeft: () => <DrawerNavigatorIcon navigation={navigation} />
+                }}
+            />
+        </LoginNavigator.Navigator>
+    )
+}
 
 function FavoritesNavigatorScreen({ navigation }) {
     return(
@@ -249,6 +277,15 @@ function MainDrawerNavigatorScreen() {
                     title: 'Home', 
                     drawerLabel: 'Home',
                     drawerIcon: () => <DrawerIcon name="home" />
+                }} 
+            />
+            <MainDrawerNavigator.Screen 
+                name="Login" 
+                component={LoginNavigatorScreen}
+                options={{ 
+                    title: 'Login', 
+                    drawerLabel: 'Login',
+                    drawerIcon: () => <DrawerIcon name="sign-in" />
                 }} 
             />
             <MainDrawerNavigator.Screen 
