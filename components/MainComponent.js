@@ -7,6 +7,7 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import {fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
+
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
 import Home from './HomeComponent';
@@ -15,6 +16,7 @@ import About from './AboutComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
 import Login from './LoginComponent';
+
 
 const mapStateToProps = state => {
     return {
